@@ -112,12 +112,17 @@ tags: ["remove_input"]
 ---
 from IPython.display import display
 import pandas as pd
+pd.set_option('display.max_colwidth', None)
+
 subjects = ["01", "02", "03"]
 runs = [1, 2]
+# For later use
+contrasts = ["IvC"]
+stats = ["effect", "variance"]
 
 def display_groups(df, groups):
     for group in df.groupby(groups, as_index=False):
-        display(group[1].reset_index().drop(columns=['index']))
+        display(group[1].style.hide(axis="index"))
 
 inputs = pd.DataFrame.from_records(
   [{
@@ -126,7 +131,7 @@ inputs = pd.DataFrame.from_records(
      "image": f"sub-{subject}_task-simon_run-{run}_bold.nii.gz",
    } for subject in subjects for run in runs]
 )
-display(inputs)
+display(inputs.style.hide(axis="index"))
 ```
 
 If we `GroupBy` *subject*, there would be three groups of images--one for each subject:
@@ -182,9 +187,6 @@ Note that with 3 subjects and 2 runs, we will have 6 groups of output images fro
 ---
 tags: ["remove_input"]
 ---
-contrasts = ["IvC"]
-stats = ["effect", "variance"]
-
 outputs = pd.DataFrame.from_records(
   [{
      "subject": subject,
@@ -196,7 +198,6 @@ outputs = pd.DataFrame.from_records(
    for subject in subjects for run in runs
    for contrast in contrasts for stat in stats]
 )
-pd.set_option('display.max_colwidth', None)
 display_groups(outputs, ["subject", "contrast"])
 ```
 
@@ -239,15 +240,22 @@ We are ready to perform a one-sample t-test to estimate population-level effects
 
 Here we only need to `GroupBy` `contrast`, as we want a separate estimate for each contrast, but want to include all subjects in the same analysis. Since we only have one `contrast`, all the incoming subject-level images will be grouped together:
 
-| image       | subject     | contrast |
-| ----------- | ----------- | ----------- |
-| sub-01_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "1" | "IvC" |
-| sub-01_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "1"| "IvC" |
-| sub-02_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "2"|  "IvC" |
-| sub-02_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "2"| "IvC" |
-| sub-03_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "3"| "IvC" |
-| sub-03_task-simon_contrast-IvC_stat-effect_statmap.nii.gz | "3"| "IvC" |
-
+```{code-cell} python3
+---
+tags: ["remove_input"]
+---
+outputs = pd.DataFrame.from_records(
+  [{
+     "subject": subject,
+     "contrast": contrast,
+     "image": f"sub-{subject}_task-simon_"
+              f"contrast-{contrast}_stat-{stat}_statmap.nii",
+   }
+   for subject in subjects
+   for contrast in contrasts for stat in stats]
+)
+display_groups(outputs, ["contrast"])
+```
 
 As before, we can specify an intercept-only model, but of type `glm` since we want to perform a random-effects analysis. We also specify a single identity t-test `Contrast` in order to compute the output of this `Node`.
 
@@ -265,4 +273,20 @@ As before, we can specify an intercept-only model, but of type `glm` since we wa
         }
       ]
     }
+```
+
+The outputs of this node collapse across subjects, leaving a single effect/variance pair:
+
+```{code-cell} python3
+---
+tags: ["remove_input"]
+---
+outputs = pd.DataFrame.from_records(
+  [{
+     "contrast": contrast,
+     "image": f"task-simon_contrast-{contrast}_stat-{stat}_statmap.nii",
+   }
+   for contrast in contrasts for stat in stats]
+)
+display_groups(outputs, ["contrast"])
 ```
