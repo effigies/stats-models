@@ -1,0 +1,40 @@
+{
+  "title": "DummyContrasts",
+  "description": "Dummy contrasts are contrasts with one condition, a weight of one,\nand the same name as the condition. That is,\n\n::\n\n    \"DummyContrasts\": {\"Contrasts\": [\"A\", \"B\"], \"Test\": \"t\"}\n\nis equivalent to the following list of :py:class:`Contrast`\\s::\n\n    \"Contrasts\": [\n        {\"Name\": \"A\", \"ConditionList\": [\"A\"], \"Weights\": [1], \"Test\": \"t\"}\n        {\"Name\": \"B\", \"ConditionList\": [\"B\"], \"Weights\": [1], \"Test\": \"t\"}\n    ]",
+  "type": "object",
+  "properties": {
+    "Description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "Contrasts": {
+      "title": "Contrasts",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "enum": [
+              1
+            ],
+            "type": "integer"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "Test": {
+      "title": "Test",
+      "enum": [
+        "pass",
+        "t",
+        "F"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "Test"
+  ]
+}

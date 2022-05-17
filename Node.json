@@ -1,0 +1,383 @@
+{
+  "title": "Node",
+  "description": "A node represents an estimator that applies to a given level of analysis.\nIt contains sufficient information to construct a design matrix, estimate\nparameter weights (betas) and construct contrasts.",
+  "type": "object",
+  "properties": {
+    "Description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "Level": {
+      "title": "Level",
+      "enum": [
+        "Run",
+        "Session",
+        "Subject",
+        "Dataset"
+      ],
+      "type": "string"
+    },
+    "Name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "GroupBy": {
+      "title": "Groupby",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "Transformations": {
+      "$ref": "#/definitions/Transformations"
+    },
+    "Model": {
+      "$ref": "#/definitions/Model"
+    },
+    "Contrasts": {
+      "title": "Contrasts",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Contrast"
+      }
+    },
+    "DummyContrasts": {
+      "$ref": "#/definitions/DummyContrasts"
+    }
+  },
+  "required": [
+    "Level",
+    "Name",
+    "GroupBy",
+    "Model"
+  ],
+  "definitions": {
+    "Transformations": {
+      "title": "Transformations",
+      "description": "Transformations describe modifications of variables to prepare a design matrix.\n\nThis field is indirect, with a :py:attr:`Transformer` name identifying an instruction\nset, and a sequence of :py:attr:`Instructions`.\n\nA Transformer accepts data frames of sparse (onset, duration, amplitude) and\ndense (onset, sampling rate, values) variables along with the list of Instructions,\nand then return a new set of sparse and/or dense variables.\n\nExamples\n--------\n\n.. code-block:: json\n\n   {\n     \"Transformer\": \"pybids-transforms-v1\",\n     \"Instructions\": [\n       {\n         \"Name\": \"Factor\",\n         \"Input\": [\"trial_type\"]\n       },\n       {\n         \"Name\": \"Convolve\",\n         \"Model\": \"spm\",\n         \"Input\": [\"trial_type.cond1\", \"trial_type.cond2\"]\n       }\n     ]\n   }",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "Transformer": {
+          "title": "Transformer",
+          "enum": [
+            "pybids-transforms-v1"
+          ],
+          "type": "string"
+        },
+        "Instructions": {
+          "title": "Instructions",
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "Transformer",
+        "Instructions"
+      ]
+    },
+    "Parameters": {
+      "title": "Parameters",
+      "description": "Parameters to an :py:class:`HRF` model.",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "PeakDelay": {
+          "title": "Peakdelay",
+          "type": "number"
+        },
+        "PeakDispersion": {
+          "title": "Peakdispersion",
+          "type": "number"
+        },
+        "UndershootDelay": {
+          "title": "Undershootdelay",
+          "type": "number"
+        },
+        "UndershootDispersion": {
+          "title": "Undershootdispersion",
+          "type": "number"
+        },
+        "PeakUndershootRatio": {
+          "title": "Peakundershootratio",
+          "type": "number"
+        },
+        "Derivatives": {
+          "title": "Derivatives",
+          "type": "integer"
+        },
+        "Delays": {
+          "title": "Delays",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "HRF": {
+      "title": "HRF",
+      "description": "Specification of a hemodynamic response function (HRF) model.",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "Variables": {
+          "title": "Variables",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Model": {
+          "title": "Model",
+          "enum": [
+            "DoubleGamma",
+            "Gamma",
+            "FiniteImpulseResponse"
+          ],
+          "type": "string"
+        },
+        "Parameters": {
+          "$ref": "#/definitions/Parameters"
+        }
+      },
+      "required": [
+        "Variables",
+        "Model"
+      ]
+    },
+    "Options": {
+      "title": "Options",
+      "description": "Options\n    ",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "HighPassFilterCutoffHz": {
+          "title": "Highpassfiltercutoffhz",
+          "type": "number"
+        },
+        "LowPassFilterCutoffHz": {
+          "title": "Lowpassfiltercutoffhz",
+          "type": "number"
+        },
+        "ReplaceVariables": {
+          "title": "Replacevariables",
+          "type": "object"
+        },
+        "Mask": {
+          "title": "Mask",
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "Aggregate": {
+          "title": "Aggregate",
+          "enum": [
+            "none",
+            "mean",
+            "pca"
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "Model": {
+      "title": "Model",
+      "description": "Model\n    ",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "Type": {
+          "title": "Type",
+          "enum": [
+            "glm",
+            "meta"
+          ],
+          "type": "string"
+        },
+        "X": {
+          "title": "X",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  1
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Formula": {
+          "title": "Formula",
+          "type": "string"
+        },
+        "HRF": {
+          "$ref": "#/definitions/HRF"
+        },
+        "Options": {
+          "$ref": "#/definitions/Options"
+        },
+        "Software": {
+          "title": "Software",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "Type",
+        "X"
+      ]
+    },
+    "Contrast": {
+      "title": "Contrast",
+      "description": "Contrasts are weighted sums of parameter estimates (betas) generated by a model fit,\nand define the outputs of a :py:class:`Node`.\n\nWhile ``\"t\"`` and ``\"pass\"`` contrasts are passed as inputs to the next node, ``\"F\"``\ncontrasts are terminal and are not passed as inputs to following nodes.",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "Name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "ConditionList": {
+          "title": "Conditionlist",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  1
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Weights": {
+          "title": "Weights",
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Test": {
+          "title": "Test",
+          "enum": [
+            "pass",
+            "t",
+            "F"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "Name",
+        "ConditionList",
+        "Weights",
+        "Test"
+      ]
+    },
+    "DummyContrasts": {
+      "title": "DummyContrasts",
+      "description": "Dummy contrasts are contrasts with one condition, a weight of one,\nand the same name as the condition. That is,\n\n::\n\n    \"DummyContrasts\": {\"Contrasts\": [\"A\", \"B\"], \"Test\": \"t\"}\n\nis equivalent to the following list of :py:class:`Contrast`\\s::\n\n    \"Contrasts\": [\n        {\"Name\": \"A\", \"ConditionList\": [\"A\"], \"Weights\": [1], \"Test\": \"t\"}\n        {\"Name\": \"B\", \"ConditionList\": [\"B\"], \"Weights\": [1], \"Test\": \"t\"}\n    ]",
+      "type": "object",
+      "properties": {
+        "Description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "Contrasts": {
+          "title": "Contrasts",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  1
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "Test": {
+          "title": "Test",
+          "enum": [
+            "pass",
+            "t",
+            "F"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "Test"
+      ]
+    }
+  }
+}

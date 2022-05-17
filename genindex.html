@@ -28,6 +28,8 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -43,6 +45,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
+    <script src="_static/js/jsoneditor.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -89,46 +92,121 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   BIDS Stats Models
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   User Guide
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="guide.html">
-   BIDS Stats Models User Guide
+  <a class="reference internal" href="intro.html">
+   Motivation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="walkthrough.html">
+   Walkthrough
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="integration.html">
+   Integration with other standards
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="legacy.html">
+   Legacy specification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="json_101.html">
+   JSON 101
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Reference
+  Specification
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="reference.html">
    BIDS Stats Models Object Reference
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.BIDSStatsModel.html">
+     bsmschema.models.BIDSStatsModel
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Node.html">
+     bsmschema.models.Node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Transformations.html">
+     bsmschema.models.Transformations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Model.html">
+     bsmschema.models.Model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.HRF.html">
+     bsmschema.models.HRF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Options.html">
+     bsmschema.models.Options
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Contrast.html">
+     bsmschema.models.Contrast
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.DummyContrasts.html">
+     bsmschema.models.DummyContrasts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="_autosummary/bsmschema.models.Edge.html">
+     bsmschema.models.Edge
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="validator.html">
+   BIDS Stats Model Validator
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Model Zoo
+  Examples and resources
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="model-zoo.html">
    Model Zoo
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="default_model.html">
+   Creating a default model
   </a>
  </li>
 </ul>
@@ -218,8 +296,283 @@ const thebe_selector_output = ".output, .cell_output"
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
  
 </div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Options.html#bsmschema.models.Options.Aggregate">Aggregate (Options attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.ArrayOfInts">ArrayOfInts (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.BIDSModelVersion">BIDSModelVersion (BIDSStatsModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Contrast.html#bsmschema.models.Contrast.ConditionList">ConditionList (Contrast attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.DummyContrasts.html#bsmschema.models.DummyContrasts.Contrasts">Contrasts (DummyContrasts attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.Contrasts">(Node attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.Description">Description (BIDSStatsModel attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Edge.html#bsmschema.models.Edge.Destination">Destination (Edge attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.DummyContrasts">DummyContrasts (Node attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.Edges">Edges (BIDSStatsModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Edge.html#bsmschema.models.Edge.Filter">Filter (Edge attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.Formula">Formula (Model attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.GroupBy">GroupBy (Node attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Options.html#bsmschema.models.Options.HighPassFilterCutoffHz">HighPassFilterCutoffHz (Options attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.HRF">HRF (Model attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.Input">Input (BIDSStatsModel attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Transformations.html#bsmschema.models.Transformations.Instructions">Instructions (Transformations attribute)</a>
+</li>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.IntField">IntField (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.Level">Level (Node attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.ListOrListOfLists">ListOrListOfLists (ExplainerModel attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.Options.html#bsmschema.models.Options.LowPassFilterCutoffHz">LowPassFilterCutoffHz (Options attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Options.html#bsmschema.models.Options.Mask">Mask (Options attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.HRF.html#bsmschema.models.HRF.Model">Model (HRF attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.Model">(Node attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.ModelField">ModelField (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.Name">Name (BIDSStatsModel attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/bsmschema.models.Contrast.html#bsmschema.models.Contrast.Name">(Contrast attribute)</a>
+</li>
+        <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.Name">(Node attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.BIDSStatsModel.html#bsmschema.models.BIDSStatsModel.Nodes">Nodes (BIDSStatsModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.Object">Object (ExplainerModel attribute)</a>
+</li>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.ObjectOfObjects">ObjectOfObjects (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.OptionalField">OptionalField (ExplainerModel attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.Options">Options (Model attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.HRF.html#bsmschema.models.HRF.Parameters">Parameters (HRF attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Options.html#bsmschema.models.Options.ReplaceVariables">ReplaceVariables (Options attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.Software">Software (Model attribute)</a>
+</li>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.SomeOptions">SomeOptions (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Edge.html#bsmschema.models.Edge.Source">Source (Edge attribute)</a>
+</li>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.StringField">StringField (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Contrast.html#bsmschema.models.Contrast.Test">Test (Contrast attribute)</a>
+
+      <ul>
+        <li><a href="_autosummary/bsmschema.models.DummyContrasts.html#bsmschema.models.DummyContrasts.Test">(DummyContrasts attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Node.html#bsmschema.models.Node.Transformations">Transformations (Node attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.Transformations.html#bsmschema.models.Transformations.Transformer">Transformer (Transformations attribute)</a>
+</li>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.Type">Type (Model attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference.html#bsmschema.models.ExplainerModel.UnionField">UnionField (ExplainerModel attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.HRF.html#bsmschema.models.HRF.Variables">Variables (HRF attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Contrast.html#bsmschema.models.Contrast.Weights">Weights (Contrast attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_autosummary/bsmschema.models.Model.html#bsmschema.models.Model.X">X (Model attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
               </div>
@@ -236,7 +589,7 @@ const thebe_selector_output = ".output, .cell_output"
     
       By The BIDS Community<br/>
     
-        &copy; Copyright 2021.<br/>
+        &copy; Copyright 2022.<br/>
   </p>
 </footer>
 </main>
