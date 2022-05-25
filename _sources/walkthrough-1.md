@@ -10,9 +10,7 @@ kernelspec:
   name: python3
 ---
 
-# Walkthrough 
-
-## The problem: Representing multi-stage models
+# Representing multi-stage neuroimaging models
 
 The statistical analysis of neuroimaging data typically occurs across distinct
 stages of analysis, with parameter estimates from lower levels of analysis
@@ -50,9 +48,13 @@ activity for incongruent versus congruent trials_, across all participants.
 We can perform this analysis by first estimating a **run-level** timeseries
 model for "Incongruent" and "Congruent" trials--separately for each individual
 run. We then compute a contrast comparing _Incongruent > Congruent_ (IvC)
-trials. Next, we pass the resulting statistical maps for the contrast to a
+trials. 
+
+Next, we pass the resulting statistical maps for the contrast to a
 **subject-level** estimator, which computes the average _IvC_ effect for each
-subject separately. Finally, we pass the resulting estimates to a
+subject separately. 
+
+Finally, we pass the resulting estimates to a
 **dataset-level** estimator, which conduts a one-sample t-test across all of the
 subject estimates for the _IvC_ contrast.
 
@@ -66,12 +68,14 @@ We can formally represent this analysis as **BIDS Stats Model**:
 :language: JSON
 ```
 
+BIDS Stats Models *must* have a {py:attr}`~bsmschema.models.BIDSStatsModel.Name` and {py:attr}`~bsmschema.models.BIDSStatsModel.BIDSModelVersion` defined, and optionally can restrict input images with {py:attr}`~bsmschema.models.BIDSStatsModel.Input`.
+
 ```{note}
 For this example, we have limited the model to three subjects using the `Input` key.
 ```
 
 _BSM_ defines this multi-stage analysis as a Graph, with each level of analysis
-defined as a separate `Node` object.
+defined as a separate `Node` object. Let's step through each `Node` separately. 
 
 ### Run-level Model
 
@@ -79,8 +83,7 @@ First, we define a `Node` for the run level analysis.
 
 ```{literalinclude} examples/model-walkthrough_smdl.json
 :language: JSON
-:start-at: '"Level": "Run"'
-:lines: 1-2
+:lines: 6-19
 ```
 
 Note that the {py:attr}`~bsmschema.models.Node.Level` key is necessary for
@@ -100,18 +103,9 @@ The {py:attr}`~bsmschema.models.Model.X` parameter defines the variables in the 
 
 Next, we specify an *Incongruent-Congruent (IvC)* contrast using the {py:attr}`~bsmschema.models.Contrast` key:
 
-Next, we specify an _Incongruent-Congruent (IvC)_ contrast using the
-{py:attr}`~bsmschema.models.Contrast` key:
-
-```json
-      "Contrasts": [
-        {
-          "Name": "IvC",
-          "ConditionList": ["incongruent", "congruent"],
-          "Weights": [1, -1],
-          "Test": "t"
-        }
-      ]
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:lines: 11-18
 ```
 
 If you have used other fMRI modeling tools this should be familar. We have
@@ -121,7 +115,7 @@ specified a t-test contrast with the weights `[1, -1]` for the conditions:
 ```{attention}
 `Contrasts` **define the outputs** that will be available to the next `Node`.
 
-Since we only modeled a single contrast (`IvC`), the next `Node` will not have access to estimates for main effects for the `congruent` or `incongruent` conditions, unless we explicitly compute a `Contrast` for each.
+Since we only modeled a single contrast (`IvC`), the next `Node` will not have access to estimates for main effects for the `congruent` or `incongruent` conditions, unless we explicitly define a `Contrast` for each.
 ```
 
 #### How to _group_ analysis inputs?
@@ -135,8 +129,11 @@ We must explicitly define this grouping structure using the
 {py:attr}`~bsmschema.models.Node.GroupBy` key for every node. To fit a separate
 time series model for each individual run image, we specify:
 
-```json
-      "GroupBy": ["run", "subject"]
+
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:start-at: ' "GroupBy": ["run", "subject"]'
+:lines: 1
 ```
 
 Here, `GroupBy` states that for every unique combination of `run` and `subject`,
@@ -204,25 +201,30 @@ display_groups(inputs, ["run", "subject"])
 
 ### Subject level Node
 
-#### From Run Outputs to Subject Inputs
+At this point, we have defined a `Model` that will be fit separate to each grouping-- in this case a separate time-series model for each `run`. 
 
-Next, we define a fixed-effects model to combine contrast outputs from each
-subject's runs together.
+Next, we want to define a `subject` level node to pool together estimates from this `Node` for each `subject` using a fixed-effects model. 
+
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:lines: 20-26
+```
 
 ```{note}
-By default, `Nodes` are linked sequentially, with all the `Contrast` outputs from a `Node` available to the subsequent `Node`.
+By default, `Nodes` are linked in sequential order, with all the `Contrast` outputs from a `Node` available to the subsequent `Node`.
 ```
+
+#### From Run Outputs to Subject Inputs
 
 We need to use `GroupBy` to define how to group the outputs from the `Run` node
 as inputs to the `Subject` level:
 
-```json
-      "Level": "Subject",
-      "Name": "subject_level",
-      "GroupBy": ["subject", "contrast"],
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:lines: 23
 ```
 
-Here we are specifying that all images belonging to a single `subject` and from a single `contrast` should be grouped together for analysis.
+Here we are specifying that all images belonging to a single `subject` and from a single `contrast` should be grouped into a unit of analysis.
 
 Note that with 3 subjects and 2 runs, we will have 6 groups of output images from the `Run` node. Given two types of images (`variance` and `effect`), this results in 12 images that would be grouped as follows:
 
@@ -245,51 +247,49 @@ display_groups(outputs, ["subject", "contrast"])
 ```
 
 ```{tip}
-In this example there is only one `contrast`, but we include `contrast` as a grouping variable to be explicit.
+Although there is only one `contrast`, we include `contrast` as a grouping variable to be explicit.
 ```
 
-#### Subject-level Model
+#### Subject Model
 
-We can now specify the `Subject` level `Model`. Since our intent is to estimate
-the _mean_ for each subject, we only need an intercept (`1`) in our model. We
-specify the `"Type"` to be `Meta`, which is a special type to identify
-fixed-effects models.
+We can now specify the `Subject` level `Model`. 
+
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:start-at: '"Model": {"X": [1], "Type": "meta"}'
+:lines: 1-2
+```
+
+Since our intent is to estimate the _mean effect_ for each subject, we only need an 
+intercept in our model. We specify the `"Type"` to be `Meta`, which is a 
+special type to identify fixed-effects models.
+
+```{note}
+`1` is a special variable used to represent the intercept.
+```
 
 Remember that we must specify `Contrasts` in order to produce outputs for the
-next `Node`. Here, we compute a simple identity contrast to pass forward the
-subject-evel estimates forward. Note that we specified the `Test` as `pass`,
-since we don't want to perform a t-test, but simply need to compute and pass
-forward parameter and variance estimates.
-
-```json
-      "Model": {
-        "X": [1],
-        "Type": "Meta"
-      },
-      "Contrasts": [
-        {
-          "Name": "IvC",
-          "ConditionList": ["IvC"],
-          "Weights": [1],
-          "Test": "pass"
-        }
-      ]
-```
+next `Node`. `DummyContrasts` is a convenience function which will create contrasts with
+the weights `[1]` for all modeled inputs. Since we are not comparing anything at 
+the subject-level and simply want to pass forward the estimates generated by the 
+fixed-effects model, this is useful and saves us from specifying a more 
+verbose (but identical) `Contrast`.
 
 ### Dataset level Node
 
 We are ready to perform a one-sample t-test to estimate population-level effects
 for the _IvC_ `Contrast`. We refer to this level as the `Dataset` level.
 
-```json
-      "Level": "Dataset",
-      "Name": "one-sample_dataset",
-      "GroupBy": ["contrast"],
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:start-at: '"Level": "Dataset",'
+:lines: 1-3
 ```
 
-Here we only need to `GroupBy` `contrast`, as we want a separate estimate for
-each contrast, but want to include all subjects in the same analysis. Since we
-only have one `contrast`, all the incoming subject-level images will be grouped
+Here we only need to `GroupBy: ['contrast']` as we want to compute a separate estimate for
+each contrast, but want to include all subjects in the same analysis. 
+
+Since we only have one `contrast`, all the incoming subject-level images will be grouped
 together:
 
 ```{code-cell} python3
@@ -309,22 +309,12 @@ outputs = pd.DataFrame.from_records(
 display_groups(outputs, ["contrast"])
 ```
 
-As before, we can specify an intercept-only model, but of type `glm` since we want to perform a random-effects analysis. We also specify a single identity t-test `Contrast` in order to compute the output of this `Node`.
+As before, we can specify an intercept-only model, but of type `glm` since we want to perform a random-effects analysis. We can again use `DummyContrasts` to specify a simple one-sample t-test contrast on the incoming `IvC` subject-level contrasts. 
 
-```json
-      "Model": {
-        "X": [1],
-        "Type": "glm"
-      },
-      "Contrasts": [
-        {
-          "Name": "IvC",
-          "ConditionList": ["IvC"],
-          "Weights": [1],
-          "Test": "t"
-        }
-      ]
-    }
+
+```{literalinclude} examples/model-walkthrough_smdl.json
+:language: JSON
+:lines: 31-32
 ```
 
 The outputs of this node collapse across subjects, leaving a single effect/variance pair:
@@ -342,3 +332,18 @@ outputs = pd.DataFrame.from_records(
 )
 display_groups(outputs, ["contrast"])
 ```
+
+
+## Ready to run 🚀
+
+At this point, we have a fully specified model three-stage fMRI model. 
+
+Our model will compute a run level incongruent-congruent contrast, pass forward the estimates to a fixed-effects model to pool subject estimates, and compute a dataset-level random-effects model and one-sample t-test to estimate population effects for the `IvC` contrast. 
+
+We can now pair this *BSM* specification with a pre-processed derivative from the original raw dataset and hand these to a tool that supports *BSM* for **fully automated execution**.
+
+## Next up
+
+- Read the next section to dive deeper into advanced usage of *BSM* to enable more complex models.
+- Check out tools like [FitLins](https://github.com/poldracklab/fitlins) which implement *BSM* execution to learn how to run a *BIDS Stats Model*
+- Take a look at more example models in the  **[](model-zoo.md)**.

@@ -56,7 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Motivation" href="intro.html" />
+    <link rel="next" title="Motivation" href="motivation.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -100,14 +100,31 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
+  <a class="reference internal" href="motivation.html">
    Motivation
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="walkthrough.html">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="walkthrough-intro.html">
    Walkthrough
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="walkthrough-1.html">
+     Representing multi-stage neuroimaging models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="walkthrough-2.html">
+     Advanced usage
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="integration.html">
@@ -135,8 +152,8 @@ const thebe_selector_output = ".output, .cell_output"
   <a class="reference internal" href="reference.html">
    BIDS Stats Models Object Reference
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -339,13 +356,39 @@ const thebe_selector_output = ".output, .cell_output"
   <div class="tex2jax_ignore mathjax_ignore section" id="bids-stats-models">
 <h1>BIDS Stats Models<a class="headerlink" href="#bids-stats-models" title="Permalink to this headline">¶</a></h1>
 <p><em>A specification for neuroimaging statistical models.</em></p>
-<p><em>BIDS Stats Models</em> (BSM) is a collaborative effort to develop a specification to describe how to fit statistical models to neuroimaging data. Its purpose is prescriptive (e.g. a recipe), rather than descriptive (e.g. summary of already fit models). At the core of BSM is a machine-readable JSON document that allows users to define a fully reproducible model across multiple stages of analysis. A BSM—in combination with a preprocessed BIDS dataset—is sufficient to execute statistical models, with minimal configuration and intervention required from the user.</p>
-<p>The <strong>goal</strong> of BSM is to promote scientific best practice by making neuroimaging models <em>transparent and reproducible</em>, as well as encourging the development of <em>standardized and automated</em> statistical analysis pipelines.</p>
-<p>To <strong>learn more</strong>, step through our <a class="reference internal" href="intro.html"><span class="doc std std-doc">User Guide</span></a>, or browse the <a class="reference internal" href="model-zoo.html"><span class="doc std std-doc">Model Zoo</span></a> for real example models on public datasets.</p>
-<p>For details on the <strong>formal specification</strong>, visit the BSM <a class="reference internal" href="reference.html"><span class="doc std std-doc">reference</span></a>.</p>
+<p><em>BIDS Stats Models</em> (BSM) describe how to fit <em>statistical models for neuroimaging data</em> using <em>a machine-readable JSON document</em>.  Its purpose is prescriptive (e.g. a recipe), rather than descriptive (e.g. summary of already fit models).</p>
+<p>A <em>BSM</em>—in combination with a preprocessed BIDS dataset—is sufficient to execute statistical models, with minimal configuration and intervention required from the user.</p>
+<p>The <strong>mission</strong> of <em>BSM</em> is to promote scientific best practice by making neuroimaging models <em>transparent and reproducible</em>, as well as encourging the development of <em>standardized and automated</em> statistical analysis pipelines.</p>
+<div class="sphinx-bs container pb-4 docutils">
+<div class="row docutils">
+<div class="d-flex col-lg-6 px-2 py-2 docutils">
+<div class="card w-100 shadow docutils">
+<div class="card-header docutils">
+<p class="card-text"><strong>📖 Learn more</strong></p>
+</div>
+<div class="card-body docutils">
+<p class="card-text"><strong><a class="reference internal" href="motivation.html"><span class="doc std std-doc">Motivation</span></a></strong>: Why do we need <em>BSM</em>?</p>
+<p class="card-text"><strong><a class="reference internal" href="walkthrough-1.html"><span class="doc std std-doc">Representing multi-stage neuroimaging models</span></a></strong>: Step-by-step introduction</p>
+<p class="card-text"><strong><a class="reference internal" href="reference.html"><span class="doc std std-doc">Specification</span></a></strong>: Dive into the technical reference</p>
+</div>
+</div>
+</div>
+<div class="d-flex col-lg-6 px-2 py-2 docutils">
+<div class="card w-100 shadow docutils">
+<div class="card-header docutils">
+<p class="card-text"><strong>🚀 Get started</strong></p>
+</div>
+<div class="card-body docutils">
+<p class="card-text"><strong><a class="reference internal" href="model-zoo.html"><span class="doc std std-doc">Model Zoo</span></a></strong>: View example models on public datasets, and modify them to your own data</p>
+<p class="card-text"><strong><a class="reference internal" href="default_model.html"><span class="doc std std-doc">Default model</span></a></strong>: How to create a simple model</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="acknowledments">
 <h2>Acknowledments<a class="headerlink" href="#acknowledments" title="Permalink to this headline">¶</a></h2>
-<p>BIDS Stats Models is supported by by NIH award R01MH109682, and as part of the broader <a class="reference external" href="https://bids.neuroimaging.io/index.html">Brain Imaging Data Standard (BIDS)</a> community.</p>
+<p>BIDS Stats Models is supported by by NIH award R01MH109682, and is part of the <a class="reference external" href="https://bids.neuroimaging.io/index.html">Brain Imaging Data Standard (BIDS)</a> community.</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>
@@ -380,7 +423,7 @@ const thebe_selector_output = ".output, .cell_output"
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="intro.html" title="next page">
+    <a class='right-next' id="next-link" href="motivation.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Motivation</p>
